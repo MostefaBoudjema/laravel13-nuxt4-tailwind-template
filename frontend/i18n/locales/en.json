@@ -112,5 +112,13 @@
   "add": "Add",
   "slug": "Slug",
   "select_permissions": "Select Permissions",
-  "sync": "Sync"
+  "sync": "Sync",
+  "add_user": "Add New User",
+  "edit_user": "Edit User",
+  "save_user": "Save User",
+  "user_created": "User created successfully",
+  "user_updated": "User updated successfully",
+  "user_deleted": "User deleted successfully",
+  "select_roles": "Select Roles",
+  "keep_empty_password": "Leave empty to keep current password"
 }

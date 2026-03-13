@@ -112,5 +112,13 @@
   "add": "Ajouter",
   "slug": "Identifiant",
   "select_permissions": "Sélectionner les Permissions",
-  "sync": "Synchroniser"
+  "sync": "Synchroniser",
+  "add_user": "Ajouter un Utilisateur",
+  "edit_user": "Modifier l'Utilisateur",
+  "save_user": "Enregistrer l'Utilisateur",
+  "user_created": "Utilisateur créé avec succès",
+  "user_updated": "Utilisateur mis à jour avec succès",
+  "user_deleted": "Utilisateur supprimé avec succès",
+  "select_roles": "Sélectionner les Rôles",
+  "keep_empty_password": "Laisser vide pour conserver le mot de passe actuel"
 }
