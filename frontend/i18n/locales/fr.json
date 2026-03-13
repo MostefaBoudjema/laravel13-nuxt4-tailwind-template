@@ -1,0 +1,15 @@
+{
+  "welcome": "Bienvenue sur Lightweight SaaS",
+  "login": "Connexion",
+  "register": "Inscription",
+  "dashboard": "Tableau de bord",
+  "logout": "Déconnexion",
+  "dark_mode": "Mode Sombre",
+  "light_mode": "Mode Clair",
+  "language": "Langue",
+  "english": "Anglais",
+  "french": "Français",
+  "users": "Utilisateurs",
+  "reports": "Rapports",
+  "settings": "Paramètres"
+}

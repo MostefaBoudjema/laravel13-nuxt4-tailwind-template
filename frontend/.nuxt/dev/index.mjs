@@ -3,14 +3,14 @@ import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
 import nodeCrypto from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getResponseStatusText } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/h3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, getResponseStatus, createError, getCookie, setCookie, sanitizeStatusCode, removeResponseHeader, getQuery as getQuery$1, readBody, getRouterParam, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatusText } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/h3/dist/index.mjs';
 import { escapeHtml } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/@vue/shared/dist/shared.cjs.js';
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/ufo/dist/index.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, joinRelativeURL, parsePath, withLeadingSlash, withTrailingSlash, decodePath, withoutTrailingSlash } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/ufo/dist/index.mjs';
 import destr, { destr as destr$1 } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/destr/dist/index.mjs';
 import { renderToString } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/vue/server-renderer/index.mjs';
 import { klona } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/defu/dist/defu.mjs';
+import defu, { defuFn, createDefu } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/defu/dist/defu.mjs';
 import { snakeCase } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/scule/dist/index.mjs';
 import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/unhead/dist/server.mjs';
 import { stringify, uneval } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/devalue/index.js';
@@ -27,6 +27,7 @@ import consola, { consola as consola$1 } from 'file://D:/www/Devs/Laravel_VueJs_
 import { ErrorParser } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/youch-core/build/index.js';
 import { Youch } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/youch/build/index.js';
 import { SourceMapConsumer } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/source-map/source-map.js';
+import { createRouterMatcher } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/@nuxtjs/i18n/node_modules/vue-router/vue-router.node.mjs';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { getContext } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/unctx/dist/index.mjs';
 import { captureRawStackTrace, parseRawStackTrace } from 'file://D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/node_modules/errx/dist/index.js';
@@ -44,18 +45,18 @@ for (const asset of serverAssets) {
   assets$1.mount(asset.baseName, unstorage_47drivers_47fs({ base: asset.dir, ignore: (asset?.ignore || []) }));
 }
 
-const storage = createStorage({});
+const storage$1 = createStorage({});
 
-storage.mount('/assets', assets$1);
+storage$1.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/server","watchOptions":{"ignored":[null]}}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/.data/kv"}));
+storage$1.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend","watchOptions":{"ignored":[null]}}));
+storage$1.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/server","watchOptions":{"ignored":[null]}}));
+storage$1.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/.nuxt"}));
+storage$1.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/.nuxt/cache"}));
+storage$1.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend/.data/kv"}));
 
 function useStorage(base = "") {
-  return base ? prefixStorage(storage, base) : storage;
+  return base ? prefixStorage(storage$1, base) : storage$1;
 }
 
 const Hasher = /* @__PURE__ */ (() => {
@@ -648,7 +649,59 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "apiBase": "http://localhost:8000/api"
+    "apiBase": "http://laravel_saas.test/api",
+    "i18n": {
+      "baseUrl": "",
+      "defaultLocale": "en",
+      "rootRedirect": "",
+      "redirectStatusCode": 302,
+      "skipSettingLocaleOnNavigate": false,
+      "locales": [
+        {
+          "code": "en",
+          "iso": "en-US",
+          "name": "English",
+          "language": ""
+        },
+        {
+          "code": "fr",
+          "iso": "fr-FR",
+          "name": "Français",
+          "language": ""
+        }
+      ],
+      "detectBrowserLanguage": {
+        "alwaysRedirect": false,
+        "cookieCrossOrigin": false,
+        "cookieDomain": "",
+        "cookieKey": "i18n_redirected",
+        "cookieSecure": false,
+        "fallbackLocale": "",
+        "redirectOn": "root",
+        "useCookie": true
+      },
+      "experimental": {
+        "localeDetector": "",
+        "typedPages": true,
+        "typedOptionsAndMessages": false,
+        "alternateLinkCanonicalQueries": true,
+        "devCache": false,
+        "cacheLifetime": "",
+        "stripMessagesPayload": false,
+        "preload": false,
+        "strictSeo": false,
+        "nitroContextDetection": true,
+        "httpCacheDuration": 10
+      },
+      "domainLocales": {
+        "en": {
+          "domain": ""
+        },
+        "fr": {
+          "domain": ""
+        }
+      }
+    }
   }
 };
 const envOptions = {
@@ -2011,7 +2064,7 @@ async function errorHandler(error, event) {
   // H3 will handle fallback
 }
 
-const script = `
+const script$1 = `
 if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
   Object.defineProperty(window, '__NUXT_DEVTOOLS_TIME_METRIC__', {
     value: {},
@@ -2024,11 +2077,463 @@ window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 
 const _hToQE5bFBJbutnNbjJQcPZRUkvDe2RjLKl2ZqAUss2M = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
-    htmlContext.head.push(`<script>${script}<\/script>`);
+    htmlContext.head.push(`<script>${script$1}<\/script>`);
   });
 });
 
-const rootDir = "D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend";
+/*!
+  * shared v11.3.0
+  * (c) 2026 kazuya kawaguchi
+  * Released under the MIT License.
+  */
+const _create = Object.create;
+const create = (obj = null) => _create(obj);
+/* eslint-enable */
+/**
+ * Useful Utilities By Evan you
+ * Modified by kazuya kawaguchi
+ * MIT License
+ * https://github.com/vuejs/vue-next/blob/master/packages/shared/src/index.ts
+ * https://github.com/vuejs/vue-next/blob/master/packages/shared/src/codeframe.ts
+ */
+const isArray = Array.isArray;
+const isFunction = (val) => typeof val === 'function';
+const isString = (val) => typeof val === 'string';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isObject = (val) => val !== null && typeof val === 'object';
+const objectToString = Object.prototype.toString;
+const toTypeString = (value) => objectToString.call(value);
+
+const isNotObjectOrIsArray = (val) => !isObject(val) || isArray(val);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function deepCopy(src, des) {
+    // src and des should both be objects, and none of them can be a array
+    if (isNotObjectOrIsArray(src) || isNotObjectOrIsArray(des)) {
+        throw new Error('Invalid value');
+    }
+    const stack = [{ src, des }];
+    while (stack.length) {
+        const { src, des } = stack.pop();
+        // using `Object.keys` which skips prototype properties
+        Object.keys(src).forEach(key => {
+            if (key === '__proto__') {
+                return;
+            }
+            // if src[key] is an object/array, set des[key]
+            // to empty object/array to prevent setting by reference
+            if (isObject(src[key]) && !isObject(des[key])) {
+                des[key] = Array.isArray(src[key]) ? [] : create();
+            }
+            if (isNotObjectOrIsArray(des[key]) || isNotObjectOrIsArray(src[key])) {
+                // replace with src[key] when:
+                // src[key] or des[key] is not an object, or
+                // src[key] or des[key] is an array
+                des[key] = src[key];
+            }
+            else {
+                // src[key] and des[key] are both objects, merge them
+                stack.push({ src: src[key], des: des[key] });
+            }
+        });
+    }
+}
+
+const __nuxtMock = { runWithContext: async (fn) => await fn() };
+const merger = createDefu((obj, key, value) => {
+  if (key === "messages" || key === "datetimeFormats" || key === "numberFormats") {
+    obj[key] ??= create(null);
+    deepCopy(value, obj[key]);
+    return true;
+  }
+});
+async function loadVueI18nOptions(vueI18nConfigs) {
+  const nuxtApp = __nuxtMock;
+  let vueI18nOptions = { messages: create(null) };
+  for (const configFile of vueI18nConfigs) {
+    const resolver = await configFile().then((x) => isModule(x) ? x.default : x);
+    const resolved = isFunction(resolver) ? await nuxtApp.runWithContext(() => resolver()) : resolver;
+    vueI18nOptions = merger(create(null), resolved, vueI18nOptions);
+  }
+  vueI18nOptions.fallbackLocale ??= false;
+  return vueI18nOptions;
+}
+const isModule = (val) => toTypeString(val) === "[object Module]";
+async function getLocaleMessages(locale, loader) {
+  const nuxtApp = __nuxtMock;
+  try {
+    const getter = await nuxtApp.runWithContext(loader.load).then((x) => isModule(x) ? x.default : x);
+    return isFunction(getter) ? await nuxtApp.runWithContext(() => getter(locale)) : getter;
+  } catch (e) {
+    throw new Error(`Failed loading locale (${locale}): ` + e.message);
+  }
+}
+async function getLocaleMessagesMerged(locale, loaders = []) {
+  const nuxtApp = __nuxtMock;
+  const messages = await Promise.all(
+    loaders.map((loader) => nuxtApp.runWithContext(() => getLocaleMessages(locale, loader)))
+  );
+  const merged = {};
+  for (const message of messages) {
+    deepCopy(message, merged);
+  }
+  return merged;
+}
+
+var welcome$1 = "Welcome to Lightweight SaaS";
+var login$1 = "Login";
+var register$1 = "Register";
+var dashboard$1 = "Dashboard";
+var logout$1 = "Logout";
+var dark_mode$1 = "Dark Mode";
+var light_mode$1 = "Light Mode";
+var language$1 = "Language";
+var english$1 = "English";
+var french$1 = "French";
+var users$1 = "Users";
+var reports$1 = "Reports";
+var settings$1 = "Settings";
+const locale_en_46json_ea8ad986 = {
+	welcome: welcome$1,
+	login: login$1,
+	register: register$1,
+	dashboard: dashboard$1,
+	logout: logout$1,
+	dark_mode: dark_mode$1,
+	light_mode: light_mode$1,
+	language: language$1,
+	english: english$1,
+	french: french$1,
+	users: users$1,
+	reports: reports$1,
+	settings: settings$1
+};
+
+var welcome = "Bienvenue sur Lightweight SaaS";
+var login = "Connexion";
+var register = "Inscription";
+var dashboard = "Tableau de bord";
+var logout = "Déconnexion";
+var dark_mode = "Mode Sombre";
+var light_mode = "Mode Clair";
+var language = "Langue";
+var english = "Anglais";
+var french = "Français";
+var users = "Utilisateurs";
+var reports = "Rapports";
+var settings = "Paramètres";
+const locale_fr_46json_5ed30cc0 = {
+	welcome: welcome,
+	login: login,
+	register: register,
+	dashboard: dashboard,
+	logout: logout,
+	dark_mode: dark_mode,
+	light_mode: light_mode,
+	language: language,
+	english: english,
+	french: french,
+	users: users,
+	reports: reports,
+	settings: settings
+};
+
+// @ts-nocheck
+const localeCodes =  [
+  "en",
+  "fr"
+];
+const localeLoaders = {
+  en: [
+    {
+      key: "locale_en_46json_ea8ad986",
+      load: () => Promise.resolve(locale_en_46json_ea8ad986),
+      cache: true
+    }
+  ],
+  fr: [
+    {
+      key: "locale_fr_46json_5ed30cc0",
+      load: () => Promise.resolve(locale_fr_46json_5ed30cc0),
+      cache: true
+    }
+  ]
+};
+const vueI18nConfigs = [];
+const normalizedLocales = [
+  {
+    code: "en",
+    iso: "en-US",
+    name: "English",
+    language: undefined
+  },
+  {
+    code: "fr",
+    iso: "fr-FR",
+    name: "Français",
+    language: undefined
+  }
+];
+
+const setupVueI18nOptions = async (defaultLocale) => {
+  const options = await loadVueI18nOptions(vueI18nConfigs);
+  options.locale = defaultLocale || options.locale || "en-US";
+  options.defaultLocale = defaultLocale;
+  options.fallbackLocale ??= false;
+  options.messages ??= {};
+  for (const locale of localeCodes) {
+    options.messages[locale] ??= {};
+  }
+  return options;
+};
+
+function defineNitroPlugin(def) {
+  return def;
+}
+
+function defineRenderHandler(render) {
+  const runtimeConfig = useRuntimeConfig();
+  return eventHandler(async (event) => {
+    const nitroApp = useNitroApp();
+    const ctx = { event, render, response: void 0 };
+    await nitroApp.hooks.callHook("render:before", ctx);
+    if (!ctx.response) {
+      if (event.path === `${runtimeConfig.app.baseURL}favicon.ico`) {
+        setResponseHeader(event, "Content-Type", "image/x-icon");
+        return send(
+          event,
+          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        );
+      }
+      ctx.response = await ctx.render(event);
+      if (!ctx.response) {
+        const _currentStatus = getResponseStatus(event);
+        setResponseStatus(event, _currentStatus === 200 ? 500 : _currentStatus);
+        return send(
+          event,
+          "No response returned from render handler: " + event.path
+        );
+      }
+    }
+    await nitroApp.hooks.callHook("render:response", ctx.response, ctx);
+    if (ctx.response.headers) {
+      setResponseHeaders(event, ctx.response.headers);
+    }
+    if (ctx.response.statusCode || ctx.response.statusMessage) {
+      setResponseStatus(
+        event,
+        ctx.response.statusCode,
+        ctx.response.statusMessage
+      );
+    }
+    return ctx.response.body;
+  });
+}
+
+const scheduledTasks = false;
+
+const tasks = {
+  
+};
+
+const __runningTasks__ = {};
+async function runTask(name, {
+  payload = {},
+  context = {}
+} = {}) {
+  if (__runningTasks__[name]) {
+    return __runningTasks__[name];
+  }
+  if (!(name in tasks)) {
+    throw createError({
+      message: `Task \`${name}\` is not available!`,
+      statusCode: 404
+    });
+  }
+  if (!tasks[name].resolve) {
+    throw createError({
+      message: `Task \`${name}\` is not implemented!`,
+      statusCode: 501
+    });
+  }
+  const handler = await tasks[name].resolve();
+  const taskEvent = { name, payload, context };
+  __runningTasks__[name] = handler.run(taskEvent);
+  try {
+    const res = await __runningTasks__[name];
+    return res;
+  } finally {
+    delete __runningTasks__[name];
+  }
+}
+
+function buildAssetsDir() {
+	// TODO: support passing event to `useRuntimeConfig`
+	return useRuntimeConfig().app.buildAssetsDir;
+}
+function buildAssetsURL(...path) {
+	return joinRelativeURL(publicAssetsURL(), buildAssetsDir(), ...path);
+}
+function publicAssetsURL(...path) {
+	// TODO: support passing event to `useRuntimeConfig`
+	const app = useRuntimeConfig().app;
+	const publicBase = app.cdnURL || app.baseURL;
+	return path.length ? joinRelativeURL(publicBase, ...path) : publicBase;
+}
+
+function parseAcceptLanguage(value) {
+  return value.split(",").map((tag) => tag.split(";")[0]).filter(
+    (tag) => !(tag === "*" || tag === "")
+  );
+}
+function createPathIndexLanguageParser(index = 0) {
+  return (path) => {
+    const rawPath = typeof path === "string" ? path : path.pathname;
+    const normalizedPath = rawPath.split("?")[0];
+    const parts = normalizedPath.split("/");
+    if (parts[0] === "") {
+      parts.shift();
+    }
+    return parts.length > index ? parts[index] || "" : "";
+  };
+}
+
+function useRuntimeI18n(nuxtApp, event) {
+  {
+    return useRuntimeConfig(event).public.i18n;
+  }
+}
+function useI18nDetection(nuxtApp) {
+  const detectBrowserLanguage = useRuntimeI18n().detectBrowserLanguage;
+  const detect = detectBrowserLanguage || {};
+  return {
+    ...detect,
+    enabled: !!detectBrowserLanguage,
+    cookieKey: detect.cookieKey || "i18n_redirected"
+  };
+}
+function resolveRootRedirect(config) {
+  if (!config) {
+    return void 0;
+  }
+  return {
+    path: "/" + (isString(config) ? config : config.path).replace(/^\//, ""),
+    code: !isString(config) && config.statusCode || 302
+  };
+}
+function toArray(value) {
+  return Array.isArray(value) ? value : [value];
+}
+
+function createLocaleConfigs(fallbackLocale) {
+  const localeConfigs = {};
+  for (const locale of localeCodes) {
+    const fallbacks = getFallbackLocaleCodes(fallbackLocale, [locale]);
+    const cacheable = isLocaleWithFallbacksCacheable(locale, fallbacks);
+    localeConfigs[locale] = { fallbacks, cacheable };
+  }
+  return localeConfigs;
+}
+function getFallbackLocaleCodes(fallback, locales) {
+  if (fallback === false) {
+    return [];
+  }
+  if (isArray(fallback)) {
+    return fallback;
+  }
+  let fallbackLocales = [];
+  if (isString(fallback)) {
+    if (locales.every((locale) => locale !== fallback)) {
+      fallbackLocales.push(fallback);
+    }
+    return fallbackLocales;
+  }
+  const targets = [...locales, "default"];
+  for (const locale of targets) {
+    if (locale in fallback == false) {
+      continue;
+    }
+    fallbackLocales = [...fallbackLocales, ...fallback[locale].filter(Boolean)];
+  }
+  return fallbackLocales;
+}
+function isLocaleCacheable(locale) {
+  return localeLoaders[locale] != null && localeLoaders[locale].every((loader) => loader.cache !== false);
+}
+function isLocaleWithFallbacksCacheable(locale, fallbackLocales) {
+  return isLocaleCacheable(locale) && fallbackLocales.every((fallbackLocale) => isLocaleCacheable(fallbackLocale));
+}
+function getDefaultLocaleForDomain(host) {
+  return normalizedLocales.find((l) => !!l.defaultForDomains?.includes(host))?.code;
+}
+const isSupportedLocale = (locale) => localeCodes.includes(locale || "");
+
+function useI18nContext(event) {
+  if (event.context.nuxtI18n == null) {
+    throw new Error("Nuxt I18n server context has not been set up yet.");
+  }
+  return event.context.nuxtI18n;
+}
+function tryUseI18nContext(event) {
+  return event.context.nuxtI18n;
+}
+const getHost = (event) => getRequestURL(event, { xForwardedHost: true }).host;
+async function initializeI18nContext(event) {
+  const runtimeI18n = useRuntimeI18n(void 0, event);
+  const defaultLocale = runtimeI18n.defaultLocale || "";
+  const options = await setupVueI18nOptions(getDefaultLocaleForDomain(getHost(event)) || defaultLocale);
+  const localeConfigs = createLocaleConfigs(options.fallbackLocale);
+  const ctx = createI18nContext();
+  ctx.vueI18nOptions = options;
+  ctx.localeConfigs = localeConfigs;
+  event.context.nuxtI18n = ctx;
+  return ctx;
+}
+function createI18nContext() {
+  return {
+    messages: {},
+    slp: {},
+    localeConfigs: {},
+    trackMap: {},
+    vueI18nOptions: void 0,
+    trackKey(key, locale) {
+      this.trackMap[locale] ??= /* @__PURE__ */ new Set();
+      this.trackMap[locale].add(key);
+    }
+  };
+}
+
+function matchBrowserLocale(locales, browserLocales) {
+  const matchedLocales = [];
+  for (const [index, browserCode] of browserLocales.entries()) {
+    const matchedLocale = locales.find((l) => l.language?.toLowerCase() === browserCode.toLowerCase());
+    if (matchedLocale) {
+      matchedLocales.push({ code: matchedLocale.code, score: 1 - index / browserLocales.length });
+      break;
+    }
+  }
+  for (const [index, browserCode] of browserLocales.entries()) {
+    const languageCode = browserCode.split("-")[0].toLowerCase();
+    const matchedLocale = locales.find((l) => l.language?.split("-")[0].toLowerCase() === languageCode);
+    if (matchedLocale) {
+      matchedLocales.push({ code: matchedLocale.code, score: 0.999 - index / browserLocales.length });
+      break;
+    }
+  }
+  return matchedLocales;
+}
+function compareBrowserLocale(a, b) {
+  if (a.score === b.score) {
+    return b.code.length - a.code.length;
+  }
+  return b.score - a.score;
+}
+function findBrowserLocale(locales, browserLocales) {
+  const matchedLocales = matchBrowserLocale(
+    locales.map((l) => ({ code: l.code, language: l.language || l.code })),
+    browserLocales
+  );
+  return matchedLocales.sort(compareBrowserLocale).at(0)?.code ?? "";
+}
 
 const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"}],"link":[],"style":[],"script":[],"noscript":[],"title":"Lightweight SaaS"};
 
@@ -2045,6 +2550,225 @@ const appSpaLoaderTag = "div";
 const appSpaLoaderAttrs = {"id":"__nuxt-loader"};
 
 const appId = "nuxt-app";
+
+const separator = "___";
+const pathLanguageParser = createPathIndexLanguageParser(0);
+const getLocaleFromRoutePath = (path) => pathLanguageParser(path);
+const getLocaleFromRouteName = (name) => name.split(separator).at(1) ?? "";
+function normalizeInput(input) {
+  return typeof input !== "object" ? String(input) : String(input?.name || input?.path || "");
+}
+function getLocaleFromRoute(route) {
+  const input = normalizeInput(route);
+  return input[0] === "/" ? getLocaleFromRoutePath(input) : getLocaleFromRouteName(input);
+}
+
+function matchDomainLocale(locales, host, pathLocale) {
+  const normalizeDomain = (domain = "") => domain.replace(/https?:\/\//, "");
+  const matches = locales.filter(
+    (locale) => normalizeDomain(locale.domain) === host || toArray(locale.domains).includes(host)
+  );
+  if (matches.length <= 1) {
+    return matches[0]?.code;
+  }
+  return (
+    // match by current path locale
+    matches.find((l) => l.code === pathLocale)?.code || matches.find((l) => l.defaultForDomains?.includes(host) ?? l.domainDefault)?.code
+  );
+}
+
+const getCookieLocale = (event, cookieName) => (getCookie(event, cookieName)) || void 0;
+const getRouteLocale = (event, route) => getLocaleFromRoute(route);
+const getHeaderLocale = (event) => findBrowserLocale(normalizedLocales, parseAcceptLanguage(getRequestHeader(event, "accept-language") || ""));
+const getHostLocale = (event, path, domainLocales) => {
+  const host = getRequestURL(event, { xForwardedHost: true }).host;
+  const locales = normalizedLocales.map((l) => ({
+    ...l,
+    domain: domainLocales[l.code]?.domain ?? l.domain
+  }));
+  return matchDomainLocale(locales, host, getLocaleFromRoutePath(path));
+};
+const useDetectors = (event, config, nuxtApp) => {
+  if (!event) {
+    throw new Error("H3Event is required for server-side locale detection");
+  }
+  const runtimeI18n = useRuntimeI18n();
+  return {
+    cookie: () => getCookieLocale(event, config.cookieKey),
+    header: () => getHeaderLocale(event) ,
+    navigator: () => void 0,
+    host: (path) => getHostLocale(event, path, runtimeI18n.domainLocales),
+    route: (path) => getRouteLocale(event, path)
+  };
+};
+
+// Generated by @nuxtjs/i18n
+const pathToI18nConfig = {};
+const i18nPathToPath = {};
+
+const matcher = createRouterMatcher([], {});
+for (const path of Object.keys(i18nPathToPath)) {
+  matcher.addRoute({ path, component: () => "", meta: {} });
+}
+const getI18nPathToI18nPath = (path, locale) => {
+  if (!path || !locale) {
+    return;
+  }
+  const plainPath = i18nPathToPath[path];
+  const i18nConfig = pathToI18nConfig[plainPath];
+  if (i18nConfig && i18nConfig[locale]) {
+    return i18nConfig[locale] === true ? plainPath : i18nConfig[locale];
+  }
+};
+function isExistingNuxtRoute(path) {
+  if (path === "") {
+    return;
+  }
+  if (path.endsWith("/__nuxt_error")) {
+    return;
+  }
+  const resolvedMatch = matcher.resolve({ path }, { path: "/", name: "", matched: [], params: {}, meta: {} });
+  return resolvedMatch.matched.length > 0 ? resolvedMatch : void 0;
+}
+function matchLocalized(path, locale, defaultLocale) {
+  if (path === "") {
+    return;
+  }
+  const parsed = parsePath(path);
+  const resolvedMatch = matcher.resolve(
+    { path: parsed.pathname || "/" },
+    { path: "/", name: "", matched: [], params: {}, meta: {} }
+  );
+  if (resolvedMatch.matched.length > 0) {
+    const alternate = getI18nPathToI18nPath(resolvedMatch.matched[0].path, locale);
+    const match = matcher.resolve(
+      { params: resolvedMatch.params },
+      { path: alternate || "/", name: "", matched: [], params: {}, meta: {} }
+    );
+    return withLeadingSlash(joinURL("", match.path));
+  }
+}
+
+function* detect(detectors, detection, path) {
+  if (detection.enabled) {
+    yield { locale: detectors.cookie(), source: "cookie" };
+    yield { locale: detectors.header(), source: "header" };
+  }
+  yield { locale: detection.fallbackLocale, source: "fallback" };
+}
+function createRedirectResponse(event, dest, code) {
+  event.node.res.setHeader("location", dest);
+  event.node.res.statusCode = sanitizeStatusCode(code, event.node.res.statusCode);
+  return {
+    headers: event.node.res.getHeaders(),
+    statusCode: event.node.res.statusCode,
+    body: `<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=${dest.replace(/"/g, "%22")}"></head></html>`
+  };
+}
+const _0uhVd5kBGMxsAo3P2TKtVB_eTNfWQUBBpzbapPBQwq8 = defineNitroPlugin(async (nitro) => {
+  const runtimeI18n = useRuntimeI18n();
+  const rootRedirect = resolveRootRedirect(runtimeI18n.rootRedirect);
+  runtimeI18n.defaultLocale || "";
+  try {
+    const cacheStorage = useStorage("cache");
+    const cachedKeys = await cacheStorage.getKeys("nitro:handlers:i18n");
+    await Promise.all(cachedKeys.map((key) => cacheStorage.removeItem(key)));
+  } catch {
+  }
+  const detection = useI18nDetection();
+  const cookieOptions = {
+    path: "/",
+    domain: detection.cookieDomain || void 0,
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+    secure: detection.cookieSecure
+  };
+  const createBaseUrlGetter = () => {
+    isFunction(runtimeI18n.baseUrl) ? "" : runtimeI18n.baseUrl || "";
+    if (isFunction(runtimeI18n.baseUrl)) {
+      console.warn("[nuxt-i18n] Configuring baseUrl as a function is deprecated and will be removed in v11.");
+      return () => "";
+    }
+    return (event, defaultLocale) => {
+      return "";
+    };
+  };
+  function resolveRedirectPath(event, path, pathLocale, defaultLocale, detector) {
+    let locale = "";
+    for (const detected of detect(detector, detection, event.path)) {
+      if (detected.locale && isSupportedLocale(detected.locale)) {
+        locale = detected.locale;
+        break;
+      }
+    }
+    locale ||= defaultLocale;
+    function getLocalizedMatch(locale2) {
+      const res = matchLocalized(path || "/", locale2);
+      if (res && res !== event.path) {
+        return res;
+      }
+    }
+    let resolvedPath = void 0;
+    let redirectCode = 302;
+    const requestURL = getRequestURL(event);
+    if (rootRedirect && requestURL.pathname === "/") {
+      locale = detection.enabled && locale || defaultLocale;
+      resolvedPath = isSupportedLocale(detector.route(rootRedirect.path)) && rootRedirect.path || matchLocalized(rootRedirect.path, locale);
+      redirectCode = rootRedirect.code;
+    } else if (runtimeI18n.redirectStatusCode) {
+      redirectCode = runtimeI18n.redirectStatusCode;
+    }
+    switch (detection.redirectOn) {
+      case "root":
+        if (requestURL.pathname !== "/") {
+          break;
+        }
+      // fallthrough (root has no prefix)
+      case "no prefix":
+        if (pathLocale) {
+          break;
+        }
+      // fallthrough to resolve
+      case "all":
+        resolvedPath ??= getLocalizedMatch(locale);
+        break;
+    }
+    if (requestURL.pathname === "/" && "no_prefix" === "prefix") ;
+    return { path: resolvedPath, code: redirectCode, locale };
+  }
+  const baseUrlGetter = createBaseUrlGetter();
+  nitro.hooks.hook("request", async (event) => {
+    await initializeI18nContext(event);
+  });
+  nitro.hooks.hook("render:before", async (context) => {
+    const { event } = context;
+    const ctx = useI18nContext(event);
+    const url = getRequestURL(event);
+    const detector = useDetectors(event, detection);
+    const localeSegment = detector.route(event.path);
+    const pathLocale = isSupportedLocale(localeSegment) && localeSegment || void 0;
+    const path = (pathLocale && url.pathname.slice(pathLocale.length + 1)) ?? url.pathname;
+    if (!url.pathname.includes("/_i18n/9SKUeVt5") && !isExistingNuxtRoute(path)) {
+      return;
+    }
+    const resolved = resolveRedirectPath(event, path, pathLocale, ctx.vueI18nOptions.defaultLocale, detector);
+    if (resolved.path && resolved.path !== url.pathname) {
+      ctx.detectLocale = resolved.locale;
+      detection.useCookie && setCookie(event, detection.cookieKey, resolved.locale, cookieOptions);
+      context.response = createRedirectResponse(
+        event,
+        joinURL(baseUrlGetter(event, ctx.vueI18nOptions.defaultLocale), resolved.path + url.search),
+        resolved.code
+      );
+      return;
+    }
+  });
+  nitro.hooks.hook("render:html", (htmlContext, { event }) => {
+    tryUseI18nContext(event);
+  });
+});
+
+const rootDir = "D:/www/Devs/Laravel_VueJs_API/laravel12-nuxt4-saas/frontend";
 
 const devReducers = {
 	VNode: (data) => isVNode(data) ? {
@@ -2130,9 +2854,19 @@ function onConsoleLog(callback) {
 	consola$1.wrapConsole();
 }
 
+const script = "\"use strict\";(()=>{const t=window,e=document.documentElement,c=[\"dark\",\"light\"],n=getStorageValue(\"localStorage\",\"nuxt-color-mode\")||\"system\";let i=n===\"system\"?u():n;const r=e.getAttribute(\"data-color-mode-forced\");r&&(i=r),l(i),t[\"__NUXT_COLOR_MODE__\"]={preference:n,value:i,getColorScheme:u,addColorScheme:l,removeColorScheme:d};function l(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.add(s):e.className+=\" \"+s,a&&e.setAttribute(\"data-\"+a,o)}function d(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.remove(s):e.className=e.className.replace(new RegExp(s,\"g\"),\"\"),a&&e.removeAttribute(\"data-\"+a)}function f(o){return t.matchMedia(\"(prefers-color-scheme\"+o+\")\")}function u(){if(t.matchMedia&&f(\"\").media!==\"not all\"){for(const o of c)if(f(\":\"+o).matches)return o}return\"light\"}})();function getStorageValue(t,e){switch(t){case\"localStorage\":return window.localStorage.getItem(e);case\"sessionStorage\":return window.sessionStorage.getItem(e);case\"cookie\":return getCookie(e);default:return null}}function getCookie(t){const c=(\"; \"+window.document.cookie).split(\"; \"+t+\"=\");if(c.length===2)return c.pop()?.split(\";\").shift()}";
+
+const _gIECKYZ3TSTc9qBkfCnVn3S20eNcGc9hv7IH7uFpHuQ = (function(nitro) {
+  nitro.hooks.hook("render:html", (htmlContext) => {
+    htmlContext.head.push(`<script>${script}<\/script>`);
+  });
+});
+
 const plugins = [
   _hToQE5bFBJbutnNbjJQcPZRUkvDe2RjLKl2ZqAUss2M,
+_0uhVd5kBGMxsAo3P2TKtVB_eTNfWQUBBpzbapPBQwq8,
 _f5fi9Dru7e391FHuoZjtFvmamr7cZJOJrXarenLEFg,
+_gIECKYZ3TSTc9qBkfCnVn3S20eNcGc9hv7IH7uFpHuQ,
 _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
@@ -2283,20 +3017,6 @@ function setSSRError(ssrContext, error) {
 	ssrContext.error = true;
 	ssrContext.payload = { error };
 	ssrContext.url = error.url;
-}
-
-function buildAssetsDir() {
-	// TODO: support passing event to `useRuntimeConfig`
-	return useRuntimeConfig().app.buildAssetsDir;
-}
-function buildAssetsURL(...path) {
-	return joinRelativeURL(publicAssetsURL(), buildAssetsDir(), ...path);
-}
-function publicAssetsURL(...path) {
-	// TODO: support passing event to `useRuntimeConfig`
-	const app = useRuntimeConfig().app;
-	const publicBase = app.cdnURL || app.baseURL;
-	return path.length ? joinRelativeURL(publicBase, ...path) : publicBase;
 }
 
 const APP_ROOT_OPEN_TAG = `<${appRootTag}${propsToString(appRootAttrs)}>`;
@@ -2596,12 +3316,130 @@ async function getIslandContext(event) {
 	};
 }
 
+const storage = prefixStorage(useStorage(), "i18n");
+function cachedFunctionI18n(fn, opts) {
+  opts = { maxAge: 1, ...opts };
+  const pending = {};
+  async function get(key, resolver) {
+    const isPending = pending[key];
+    if (!isPending) {
+      pending[key] = Promise.resolve(resolver());
+    }
+    try {
+      return await pending[key];
+    } finally {
+      delete pending[key];
+    }
+  }
+  return async (...args) => {
+    const key = [opts.name, opts.getKey(...args)].join(":").replace(/:\/$/, ":index");
+    const maxAge = opts.maxAge ?? 1;
+    const isCacheable = !opts.shouldBypassCache(...args) && maxAge >= 0;
+    const cache = isCacheable && await storage.getItemRaw(key);
+    if (!cache || cache.ttl < Date.now()) {
+      pending[key] = Promise.resolve(fn(...args));
+      const value = await get(key, () => fn(...args));
+      if (isCacheable) {
+        await storage.setItemRaw(key, { ttl: Date.now() + maxAge * 1e3, value, mtime: Date.now() });
+      }
+      return value;
+    }
+    return cache.value;
+  };
+}
+
+const _getMessages = async (locale) => {
+  return { [locale]: await getLocaleMessagesMerged(locale, localeLoaders[locale]) };
+};
+cachedFunctionI18n(_getMessages, {
+  name: "messages",
+  maxAge: -1 ,
+  getKey: (locale) => locale,
+  shouldBypassCache: (locale) => !isLocaleCacheable(locale)
+});
+const getMessages = _getMessages ;
+const _getMergedMessages = async (locale, fallbackLocales) => {
+  const merged = {};
+  try {
+    if (fallbackLocales.length > 0) {
+      const messages = await Promise.all(fallbackLocales.map(getMessages));
+      for (const message2 of messages) {
+        deepCopy(message2, merged);
+      }
+    }
+    const message = await getMessages(locale);
+    deepCopy(message, merged);
+    return merged;
+  } catch (e) {
+    throw new Error("Failed to merge messages: " + e.message);
+  }
+};
+const getMergedMessages = cachedFunctionI18n(_getMergedMessages, {
+  name: "merged-single",
+  maxAge: -1 ,
+  getKey: (locale, fallbackLocales) => `${locale}-[${[...new Set(fallbackLocales)].sort().join("-")}]`,
+  shouldBypassCache: (locale, fallbackLocales) => !isLocaleWithFallbacksCacheable(locale, fallbackLocales)
+});
+const _getAllMergedMessages = async (locales) => {
+  const merged = {};
+  try {
+    const messages = await Promise.all(locales.map(getMessages));
+    for (const message of messages) {
+      deepCopy(message, merged);
+    }
+    return merged;
+  } catch (e) {
+    throw new Error("Failed to merge messages: " + e.message);
+  }
+};
+cachedFunctionI18n(_getAllMergedMessages, {
+  name: "merged-all",
+  maxAge: -1 ,
+  getKey: (locales) => locales.join("-"),
+  shouldBypassCache: (locales) => !locales.every((locale) => isLocaleCacheable(locale))
+});
+
+const _messagesHandler = defineEventHandler(async (event) => {
+  const locale = getRouterParam(event, "locale");
+  if (!locale) {
+    throw createError({ status: 400, message: "Locale not specified." });
+  }
+  const ctx = useI18nContext(event);
+  if (ctx.localeConfigs && locale in ctx.localeConfigs === false) {
+    throw createError({ status: 404, message: `Locale '${locale}' not found.` });
+  }
+  const messages = await getMergedMessages(locale, ctx.localeConfigs?.[locale]?.fallbacks ?? []);
+  deepCopy(messages, ctx.messages);
+  return ctx.messages;
+});
+const _cachedMessageLoader = defineCachedFunction(_messagesHandler, {
+  name: "i18n:messages-internal",
+  maxAge: -1 ,
+  getKey: (event) => [getRouterParam(event, "locale") ?? "null", getRouterParam(event, "hash") ?? "null"].join("-"),
+  async shouldBypassCache(event) {
+    const locale = getRouterParam(event, "locale");
+    if (locale == null) {
+      return false;
+    }
+    const ctx = tryUseI18nContext(event) || await initializeI18nContext(event);
+    return !ctx.localeConfigs?.[locale]?.cacheable;
+  }
+});
+defineCachedEventHandler(_cachedMessageLoader, {
+  name: "i18n:messages",
+  maxAge: -1 ,
+  swr: false,
+  getKey: (event) => [getRouterParam(event, "locale") ?? "null", getRouterParam(event, "hash") ?? "null"].join("-")
+});
+const _wrrz6q = _messagesHandler ;
+
 const _lazy_AE6RMZ = () => Promise.resolve().then(function () { return renderer; });
 
 const handlers = [
   { route: '', handler: _MTicjg, lazy: false, middleware: true, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_AE6RMZ, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: handler$1, lazy: false, middleware: false, method: undefined },
+  { route: '/_i18n/:hash/:locale/messages.json', handler: _wrrz6q, lazy: false, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_AE6RMZ, lazy: true, middleware: false, method: undefined }
 ];
 
@@ -2745,82 +3583,6 @@ function useNitroApp() {
   return nitroApp$1;
 }
 runNitroPlugins(nitroApp$1);
-
-function defineRenderHandler(render) {
-  const runtimeConfig = useRuntimeConfig();
-  return eventHandler(async (event) => {
-    const nitroApp = useNitroApp();
-    const ctx = { event, render, response: void 0 };
-    await nitroApp.hooks.callHook("render:before", ctx);
-    if (!ctx.response) {
-      if (event.path === `${runtimeConfig.app.baseURL}favicon.ico`) {
-        setResponseHeader(event, "Content-Type", "image/x-icon");
-        return send(
-          event,
-          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-        );
-      }
-      ctx.response = await ctx.render(event);
-      if (!ctx.response) {
-        const _currentStatus = getResponseStatus(event);
-        setResponseStatus(event, _currentStatus === 200 ? 500 : _currentStatus);
-        return send(
-          event,
-          "No response returned from render handler: " + event.path
-        );
-      }
-    }
-    await nitroApp.hooks.callHook("render:response", ctx.response, ctx);
-    if (ctx.response.headers) {
-      setResponseHeaders(event, ctx.response.headers);
-    }
-    if (ctx.response.statusCode || ctx.response.statusMessage) {
-      setResponseStatus(
-        event,
-        ctx.response.statusCode,
-        ctx.response.statusMessage
-      );
-    }
-    return ctx.response.body;
-  });
-}
-
-const scheduledTasks = false;
-
-const tasks = {
-  
-};
-
-const __runningTasks__ = {};
-async function runTask(name, {
-  payload = {},
-  context = {}
-} = {}) {
-  if (__runningTasks__[name]) {
-    return __runningTasks__[name];
-  }
-  if (!(name in tasks)) {
-    throw createError({
-      message: `Task \`${name}\` is not available!`,
-      statusCode: 404
-    });
-  }
-  if (!tasks[name].resolve) {
-    throw createError({
-      message: `Task \`${name}\` is not implemented!`,
-      statusCode: 501
-    });
-  }
-  const handler = await tasks[name].resolve();
-  const taskEvent = { name, payload, context };
-  __runningTasks__[name] = handler.run(taskEvent);
-  try {
-    const res = await __runningTasks__[name];
-    return res;
-  } finally {
-    delete __runningTasks__[name];
-  }
-}
 
 if (!globalThis.crypto) {
   globalThis.crypto = nodeCrypto.webcrypto;

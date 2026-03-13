@@ -9,7 +9,12 @@ import {
   faChartBar, 
   faCog,
   faExclamationTriangle,
-  faCheckCircle
+  faCheckCircle,
+  faSun,
+  faMoon,
+  faChevronDown,
+  faBars,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons'
 
 // This is important, we are going to let Nuxt handle the CSS
@@ -24,7 +29,12 @@ library.add(
   faChartBar, 
   faCog,
   faExclamationTriangle,
-  faCheckCircle
+  faCheckCircle,
+  faSun,
+  faMoon,
+  faChevronDown,
+  faBars,
+  faTimes
 )
 
 export default defineNuxtPlugin((nuxtApp) => {

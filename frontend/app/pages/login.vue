@@ -7,6 +7,7 @@ definePageMeta({
   middleware: 'guest'
 })
 
+const { t } = useI18n()
 const auth = useAuthStore()
 const form = reactive({
   email: '',
@@ -24,21 +25,21 @@ onMounted(() => {
   const tl = gsap.timeline()
   tl.from(loginBox.value, {
     opacity: 0,
-    y: 50,
-    duration: 1,
+    y: 30,
+    duration: 0.5,
     ease: 'power3.out'
   })
   .from(loginTitle.value, {
     opacity: 0,
-    x: -20,
-    duration: 0.8
-  }, "-=0.5")
+    x: -15,
+    duration: 0.4
+  }, "-=0.2")
   .from(loginItems.value, {
     opacity: 0,
-    y: 20,
-    stagger: 0.1,
-    duration: 0.6
-  }, "-=0.4")
+    y: 10,
+    stagger: 0.04,
+    duration: 0.3
+  }, "-=0.2")
 })
 
 const handleLogin = async () => {
@@ -76,28 +77,28 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="flex justify-center items-center min-h-[70vh]">
-    <div ref="loginBox" class="w-full max-w-md p-10 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl relative overflow-hidden group">
+  <div class="flex justify-center items-center py-10">
+    <div ref="loginBox" class="w-full max-w-md p-8 md:p-10 rounded-[2.5rem] bg-white dark:bg-slate-800/50 backdrop-blur-xl border border-slate-200 dark:border-white/10 shadow-2xl relative overflow-hidden group transition-colors duration-300">
       <!-- Background decoration -->
-      <div class="absolute -top-24 -right-24 w-48 h-48 bg-purple-500/20 blur-3xl rounded-full group-hover:bg-purple-500/30 transition-colors duration-500"></div>
-      <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-pink-500/20 blur-3xl rounded-full group-hover:bg-pink-500/30 transition-colors duration-500"></div>
+      <div class="absolute -top-24 -right-24 w-48 h-48 bg-purple-500/10 blur-3xl rounded-full group-hover:bg-purple-500/20 transition-colors duration-500"></div>
+      <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-pink-500/10 blur-3xl rounded-full group-hover:bg-pink-500/20 transition-colors duration-500"></div>
 
       <div class="relative z-10">
         <div class="mb-10">
-          <h2 ref="loginTitle" class="text-4xl font-bold mb-2">Login</h2>
-          <p class="text-white/60">Enter your credentials to access your account</p>
+          <h2 ref="loginTitle" class="text-4xl font-bold mb-2 dark:text-white text-slate-800 transition-colors">{{ t('login') }}</h2>
+          <p class="text-slate-500 dark:text-white/60">Enter your credentials to access your account</p>
         </div>
 
         <form @submit.prevent="handleLogin" class="space-y-6">
           <div ref="el => loginItems[0] = el">
-            <label class="block text-sm font-semibold mb-2 ml-1">Email Address</label>
+            <label class="block text-sm font-semibold mb-2 ml-1 text-slate-700 dark:text-white/80">Email Address</label>
             <div class="relative">
-              <fa icon="user" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
+              <fa icon="user" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-white/30" />
               <input 
                 v-model="form.email" 
                 type="email" 
                 placeholder="email@example.com" 
-                class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:ring-2 focus:ring-purple-500 outline-none transition-all placeholder:text-white/20"
+                class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:ring-2 focus:ring-purple-500 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-white/20 dark:text-white text-slate-800"
                 required
               />
             </div>
@@ -105,14 +106,14 @@ const handleLogin = async () => {
           </div>
 
           <div ref="el => loginItems[1] = el">
-            <label class="block text-sm font-semibold mb-2 ml-1">Password</label>
+            <label class="block text-sm font-semibold mb-2 ml-1 text-slate-700 dark:text-white/80">Password</label>
             <div class="relative">
-              <fa icon="lock" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
+              <fa icon="lock" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-white/30" />
               <input 
                 v-model="form.password" 
                 type="password" 
                 placeholder="••••••••" 
-                class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:ring-2 focus:ring-purple-500 outline-none transition-all placeholder:text-white/20"
+                class="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl py-4 pl-12 pr-4 focus:ring-2 focus:ring-purple-500 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-white/20 dark:text-white text-slate-800"
                 required
               />
             </div>
@@ -123,19 +124,19 @@ const handleLogin = async () => {
             <button 
               type="submit" 
               :disabled="loading"
-              class="w-full bg-white text-indigo-900 py-4 rounded-2xl font-bold hover:bg-white/90 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2"
+              class="w-full bg-indigo-600 dark:bg-white text-white dark:text-indigo-900 py-4 rounded-2xl font-bold hover:bg-indigo-700 dark:hover:bg-white/90 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20 dark:shadow-none"
             >
-              <span v-if="loading" class="w-5 h-5 border-2 border-indigo-900 border-t-transparent rounded-full animate-spin"></span>
-              <span>{{ loading ? 'Authenticating...' : 'Sign In' }}</span>
+              <span v-if="loading" class="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
+              <span>{{ loading ? 'Authenticating...' : t('login') }}</span>
             </button>
           </div>
 
-          <div ref="el => loginItems[3] = el" class="text-center text-sm text-white/40 pt-2">
-            Don't have an account? <NuxtLink to="/register" class="text-white font-bold hover:underline">Create one</NuxtLink>
+          <div ref="el => loginItems[3] = el" class="text-center text-sm text-slate-500 dark:text-white/40 pt-2">
+            Don't have an account? <NuxtLink to="/register" class="text-indigo-600 dark:text-white font-bold hover:underline transition-colors">Create one</NuxtLink>
           </div>
         </form>
         
-        <div v-if="errors.server" class="mt-6 p-4 bg-rose-500/20 border border-rose-500/30 rounded-2xl text-rose-200 text-sm flex items-center gap-3">
+        <div v-if="errors.server" class="mt-6 p-4 bg-rose-500/20 border border-rose-500/30 rounded-2xl text-rose-600 dark:text-rose-200 text-sm flex items-center gap-3">
           <fa icon="exclamation-triangle" />
           {{ errors.server[0] }}
         </div>

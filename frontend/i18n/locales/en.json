@@ -1,0 +1,15 @@
+{
+  "welcome": "Welcome to Lightweight SaaS",
+  "login": "Login",
+  "register": "Register",
+  "dashboard": "Dashboard",
+  "logout": "Logout",
+  "dark_mode": "Dark Mode",
+  "light_mode": "Light Mode",
+  "language": "Language",
+  "english": "English",
+  "french": "French",
+  "users": "Users",
+  "reports": "Reports",
+  "settings": "Settings"
+}

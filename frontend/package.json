@@ -13,6 +13,8 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^3.0.6",
+    "@nuxtjs/color-mode": "^4.0.0",
+    "@nuxtjs/i18n": "^10.2.3",
     "@pinia/nuxt": "latest",
     "gsap": "^3.12.5",
     "nuxt": "^4.0.0-rc.2",
