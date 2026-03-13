@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 
   modules: [
     '@pinia/nuxt',
+    '@nuxtjs/tailwindcss'
   ],
 
   runtimeConfig: {
@@ -15,6 +16,7 @@ export default defineNuxtConfig({
   },
 
   css: [
+    '~/assets/css/tailwind.css',
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
 

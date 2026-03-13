@@ -16,30 +16,4 @@ if (auth.token && !auth.user) {
   </NuxtLayout>
 </template>
 
-<style>
-/* Global Transitions */
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.4s;
-}
-.page-enter-from,
-.page-leave-to {
-  opacity: 0;
-  filter: blur(1rem);
-}
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #e2e8f0;
-  border-radius: 20px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #cbd5e1;
-}
-</style>

@@ -13,8 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Allow frontend origin for CORS (Nuxt 4)
-        $middleware->statefulApi();
+        // CSRF protection is usually for web. For token-based API, we don't need stateful sessions.
+        // If we want stateful sessions for SPA, we'd use statefulApi(), but that requires CSRF cookies.
+        // For this project, we prioritize Bearer tokens as requested.
 
         // Register Spatie role/permission middleware aliases
         $middleware->alias([
