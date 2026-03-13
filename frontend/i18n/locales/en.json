@@ -123,5 +123,12 @@
   "keep_empty_password": "Leave empty to keep current password",
   "search_users": "Search users...",
   "search_roles": "Search roles...",
-  "search_permissions": "Search permissions..."
+  "search_permissions": "Search permissions...",
+  "get_started": "Get Started",
+  "start_free_trial": "Start Free Trial",
+  "view_demo": "View Demo",
+  "hero_description": "The modern SaaS starter kit powered by Laravel 12 and Nuxt 4. Build, manage, and scale your application with state-of-the-art security and design patterns.",
+  "watch_demo": "Watch Demo",
+  "new_v2_launch": "v2.0 is now live",
+  "all_rights_reserved": "All Rights Reserved. Crafted with precision for modern developers."
 }

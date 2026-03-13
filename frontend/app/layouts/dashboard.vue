@@ -5,7 +5,7 @@ const { t } = useI18n()
 const isSidebarOpen = ref(false)
 
 const navLinks = [
-  { to: '/', icon: 'dashboard', label: 'dashboard' },
+  { to: '/dashboard', icon: 'dashboard', label: 'dashboard' },
   { to: '/users', icon: 'users', label: 'users', role: 'admin' },
   { to: '/roles', icon: 'shield-alt', label: 'roles', role: 'admin' },
   { to: '/permissions', icon: 'key', label: 'permissions', role: 'admin' },

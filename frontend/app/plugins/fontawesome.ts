@@ -22,7 +22,13 @@ import {
   faKey,
   faSync,
   faInfoCircle,
-  faEnvelope
+  faEnvelope,
+  faRocket,
+  faArrowRight,
+  faPlay,
+  faZap,
+  faLayerGroup,
+  faThLarge
 } from '@fortawesome/free-solid-svg-icons'
 
 // This is important, we are going to let Nuxt handle the CSS
@@ -50,7 +56,13 @@ library.add(
   faKey,
   faSync,
   faInfoCircle,
-  faEnvelope
+  faEnvelope,
+  faRocket,
+  faArrowRight,
+  faPlay,
+  faZap,
+  faLayerGroup,
+  faThLarge
 )
 
 export default defineNuxtPlugin((nuxtApp) => {

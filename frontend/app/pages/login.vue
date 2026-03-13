@@ -62,7 +62,7 @@ const handleLogin = async () => {
       scale: 0.95,
       y: -20,
       duration: 0.5,
-      onComplete: () => navigateTo('/')
+      onComplete: () => navigateTo('/dashboard')
     })
   } catch (e: any) {
     if (e.response?._data?.errors) {

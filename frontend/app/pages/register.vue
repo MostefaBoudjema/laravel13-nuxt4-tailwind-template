@@ -52,7 +52,7 @@ const handleRegister = async () => {
     auth.setToken(response.token)
     auth.setUser(response.user)
     
-    navigateTo('/')
+    navigateTo('/dashboard')
   } catch (e: any) {
     if (e.response?._data?.errors) {
       errors.value = e.response._data.errors

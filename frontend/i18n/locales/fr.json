@@ -123,5 +123,12 @@
   "keep_empty_password": "Laisser vide pour conserver le mot de passe actuel",
   "search_users": "Rechercher des utilisateurs...",
   "search_roles": "Rechercher des rôles...",
-  "search_permissions": "Rechercher des permissions..."
+  "search_permissions": "Rechercher des permissions...",
+  "get_started": "Commencer",
+  "start_free_trial": "Essai gratuit",
+  "view_demo": "Voir Démo",
+  "hero_description": "Le kit de démarrage SaaS moderne propulsé par Laravel 12 et Nuxt 4. Construisez, gérez et développez votre application avec une sécurité et des modèles de conception à la pointe de la technologie.",
+  "watch_demo": "Regarder la Démo",
+  "new_v2_launch": "La v2.0 est en ligne",
+  "all_rights_reserved": "Tous Droits Réservés. Conçu avec précision pour les développeurs modernes."
 }
