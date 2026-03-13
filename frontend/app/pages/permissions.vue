@@ -168,40 +168,73 @@ const deletePermission = async (permissionId: number) => {
       </div>
     </div>
 
-    <!-- Modal -->
-    <div v-if="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
-      <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 overflow-hidden">
+    <!-- Drawer -->
+    <Transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="translate-x-full"
+      enter-to-class="translate-x-0"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="translate-x-0"
+      leave-to-class="translate-x-full"
+    >
+      <div v-if="isModalOpen" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-100 dark:border-slate-800 flex flex-col">
         <div class="px-8 py-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
           <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">{{ isEditing ? t('edit_permission') : t('add_permission') }}</h3>
-          <button @click="closeModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+          <button @click="closeModal" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
             <fa icon="times" />
           </button>
         </div>
         
-        <form @submit.prevent="handleSubmit" class="p-8 space-y-6">
-          <div class="space-y-2">
-            <label class="text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ t('permission_name') }}</label>
-            <input 
-              v-model="form.name" 
-              type="text" 
-              required
-              class="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
-              placeholder="e.g. edit-posts"
-            />
-            <p class="text-[10px] text-slate-500 italic">Use kebab-case for permission names</p>
+        <form @submit.prevent="handleSubmit" class="flex-1 flex flex-col h-full">
+          <div class="flex-1 p-8 space-y-6">
+            <div class="space-y-3">
+              <label class="text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                <fa icon="key" class="text-indigo-500" />
+                {{ t('permission_name') }}
+              </label>
+              <input 
+                v-model="form.name" 
+                type="text" 
+                required
+                class="w-full px-5 py-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all shadow-sm"
+                placeholder="e.g. manage-users"
+              />
+              <p class="text-xs text-slate-500 italic px-1">{{ t('use_kebab_case') || 'Use kebab-case for permission names (e.g. view-dashboard)' }}</p>
+            </div>
+
+            <div v-if="!isEditing" class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800/50">
+              <div class="flex gap-3">
+                <fa icon="info-circle" class="text-indigo-500 mt-0.5" />
+                <p class="text-xs text-indigo-700 dark:text-indigo-300 leading-relaxed font-medium">
+                  {{ t('permission_info') || 'New permissions are automatically attached to the system guard. You can assign them to roles after creation.' }}
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div class="flex justify-end gap-3 pt-4">
-            <button type="button" @click="closeModal" class="px-6 py-2.5 rounded-xl font-bold text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors">
+          <div class="p-8 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-700 flex justify-end gap-4">
+            <button type="button" @click="closeModal" class="px-6 py-3 rounded-2xl font-bold text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
               {{ t('cancel') }}
             </button>
-            <button type="submit" :disabled="submitting" class="flex items-center gap-2 bg-indigo-600 text-white px-8 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-md active:scale-95 disabled:opacity-50">
+            <button type="submit" :disabled="submitting" class="flex items-center gap-3 bg-indigo-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/25 active:scale-95 disabled:opacity-50">
               <fa v-if="submitting" icon="cog" class="animate-spin" />
               {{ t('save_permission') }}
             </button>
           </div>
         </form>
       </div>
-    </div>
+    </Transition>
+
+    <!-- Drawer Backdrop -->
+    <Transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div v-if="isModalOpen" @click="closeModal" class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm"></div>
+    </Transition>
   </div>
 </template>

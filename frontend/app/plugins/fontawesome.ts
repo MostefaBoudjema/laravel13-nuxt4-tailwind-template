@@ -20,7 +20,8 @@ import {
   faTrash,
   faShieldAlt,
   faKey,
-  faSync
+  faSync,
+  faInfoCircle
 } from '@fortawesome/free-solid-svg-icons'
 
 // This is important, we are going to let Nuxt handle the CSS
@@ -46,7 +47,8 @@ library.add(
   faTrash,
   faShieldAlt,
   faKey,
-  faSync
+  faSync,
+  faInfoCircle
 )
 
 export default defineNuxtPlugin((nuxtApp) => {

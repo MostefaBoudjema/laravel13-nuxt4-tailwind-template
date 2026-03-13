@@ -182,54 +182,89 @@ const deleteRole = async (roleId: number) => {
       </div>
     </div>
 
-    <!-- Modal -->
-    <div v-if="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
-      <div class="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 overflow-hidden">
+    <!-- Drawer -->
+    <Transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="translate-x-full"
+      enter-to-class="translate-x-0"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="translate-x-0"
+      leave-to-class="translate-x-full"
+    >
+      <div v-if="isModalOpen" class="fixed inset-y-0 right-0 z-50 w-full max-w-lg bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-100 dark:border-slate-800 flex flex-col">
         <div class="px-8 py-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center">
           <h3 class="text-xl font-bold text-slate-800 dark:text-slate-200">{{ isEditing ? t('edit_role') : t('add_role') }}</h3>
-          <button @click="closeModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+          <button @click="closeModal" class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
             <fa icon="times" />
           </button>
         </div>
         
-        <form @submit.prevent="handleSubmit" class="p-8 space-y-6">
-          <div class="space-y-2">
-            <label class="text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ t('role_name') }}</label>
-            <input 
-              v-model="form.name" 
-              type="text" 
-              required
-              class="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
-              placeholder="e.g. editor"
-            />
-          </div>
-
-          <div class="space-y-4">
-            <label class="text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{{ t('select_permissions') }}</label>
-            <div class="grid grid-cols-2 gap-3 max-h-48 overflow-y-auto p-1">
-              <label v-for="perm in permissions" :key="perm.id" class="flex items-center gap-3 p-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition-colors">
-                <input 
-                  type="checkbox" 
-                  :value="perm.name" 
-                  v-model="form.permissions"
-                  class="w-5 h-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
-                />
-                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">{{ perm.name }}</span>
+        <form @submit.prevent="handleSubmit" class="flex-1 overflow-hidden flex flex-col">
+          <div class="flex-1 overflow-y-auto p-8 space-y-8">
+            <div class="space-y-3">
+              <label class="text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                <fa icon="shield-alt" class="text-indigo-500" />
+                {{ t('role_name') }}
               </label>
+              <input 
+                v-model="form.name" 
+                type="text" 
+                required
+                class="w-full px-5 py-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all shadow-sm"
+                placeholder="e.g. Content Manager"
+              />
+            </div>
+
+            <div class="space-y-4">
+              <label class="text-sm font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                <fa icon="key" class="text-indigo-500" />
+                {{ t('select_permissions') }}
+              </label>
+              <div class="grid grid-cols-1 gap-3">
+                <label v-for="perm in permissions" :key="perm.id" 
+                  class="group flex items-center gap-4 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 hover:border-indigo-200 dark:hover:border-indigo-900/50 hover:shadow-md cursor-pointer transition-all"
+                  :class="{'border-indigo-600 bg-indigo-50/30 dark:bg-indigo-900/20': form.permissions.includes(perm.name)}"
+                >
+                  <div class="relative flex items-center">
+                    <input 
+                      type="checkbox" 
+                      :value="perm.name" 
+                      v-model="form.permissions"
+                      class="peer w-6 h-6 rounded-lg border-slate-300 dark:border-slate-600 text-indigo-600 focus:ring-indigo-500 transition-all cursor-pointer"
+                    />
+                  </div>
+                  <div class="flex flex-col">
+                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200">{{ perm.name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') }}</span>
+                    <span class="text-xs text-slate-500 font-mono">{{ perm.name }}</span>
+                  </div>
+                </label>
+              </div>
             </div>
           </div>
 
-          <div class="flex justify-end gap-3 pt-4">
-            <button type="button" @click="closeModal" class="px-6 py-2.5 rounded-xl font-bold text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors">
+          <div class="p-8 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-700 flex justify-end gap-4">
+            <button type="button" @click="closeModal" class="px-6 py-3 rounded-2xl font-bold text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
               {{ t('cancel') }}
             </button>
-            <button type="submit" :disabled="submitting" class="flex items-center gap-2 bg-indigo-600 text-white px-8 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-md active:scale-95 disabled:opacity-50">
+            <button type="submit" :disabled="submitting" class="flex items-center gap-3 bg-indigo-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/25 active:scale-95 disabled:opacity-50">
               <fa v-if="submitting" icon="cog" class="animate-spin" />
               {{ t('save_role') }}
             </button>
           </div>
         </form>
       </div>
-    </div>
+    </Transition>
+
+    <!-- Drawer Backdrop -->
+    <Transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div v-if="isModalOpen" @click="closeModal" class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm"></div>
+    </Transition>
   </div>
 </template>
