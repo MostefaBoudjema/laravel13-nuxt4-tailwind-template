@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\ReportController;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\v1\AuthController;
+use App\Http\Controllers\Api\v1\ReportController;
+use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,10 +25,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('users', UserController::class);
         
         // Roles CRUD
-        Route::apiResource('roles', \App\Http\Controllers\Api\Admin\RoleController::class);
+        Route::apiResource('roles', \App\Http\Controllers\Api\v1\Admin\RoleController::class);
         
         // Permissions CRUD
-        Route::apiResource('permissions', \App\Http\Controllers\Api\Admin\PermissionController::class);
+        Route::apiResource('permissions', \App\Http\Controllers\Api\v1\Admin\PermissionController::class);
     });
 
     // Admin + Manager
