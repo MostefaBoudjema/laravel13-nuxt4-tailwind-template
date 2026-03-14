@@ -8,35 +8,21 @@ use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
+    protected \App\Services\UserService $userService;
+
+    public function __construct(\App\Services\UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * Get all users (admin only).
      */
     public function index(\Illuminate\Http\Request $request): JsonResponse
     {
-        $query = User::with('roles', 'permissions')
-            ->select(['id', 'name', 'email', 'created_at']);
+        $data = $this->userService->listUsers($request->only('search'));
 
-        if ($request->filled('search')) {
-            $query->where(function($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('email', 'like', '%' . $request->search . '%');
-            });
-        }
-
-        $users = $query->get()
-            ->map(fn(User $user) => [
-                'id'          => $user->id,
-                'name'        => $user->name,
-                'email'       => $user->email,
-                'roles'       => $user->getRoleNames(),
-                'permissions' => $user->getPermissionNames(), // Use simpler permission check
-                'created_at'  => $user->created_at,
-            ]);
-
-        return response()->json([
-            'data'  => $users,
-            'total' => $users->count(),
-        ]);
+        return response()->json($data);
     }
 
     /**
@@ -52,19 +38,11 @@ class UserController extends Controller
             'roles.*' => 'string|exists:roles,name',
         ]);
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
-        ]);
-
-        if (isset($validated['roles'])) {
-            $user->syncRoles($validated['roles']);
-        }
+        $user = $this->userService->createUser($validated);
 
         return response()->json([
             'message' => 'User created successfully',
-            'data' => $user->load('roles')
+            'data' => $user
         ], 201);
     }
 
@@ -81,22 +59,11 @@ class UserController extends Controller
             'roles.*' => 'string|exists:roles,name',
         ]);
 
-        $user->name = $validated['name'];
-        $user->email = $validated['email'];
-
-        if (!empty($validated['password'])) {
-            $user->password = \Illuminate\Support\Facades\Hash::make($validated['password']);
-        }
-
-        $user->save();
-
-        if (isset($validated['roles'])) {
-            $user->syncRoles($validated['roles']);
-        }
+        $user = $this->userService->updateUser($user, $validated);
 
         return response()->json([
             'message' => 'User updated successfully',
-            'data' => $user->load('roles')
+            'data' => $user
         ]);
     }
 
@@ -105,12 +72,11 @@ class UserController extends Controller
      */
     public function destroy(User $user): JsonResponse
     {
-        if ($user->hasRole('admin') && User::role('admin')->count() <= 1) {
-            return response()->json(['message' => 'Cannot delete the last administrator'], 403);
+        try {
+            $this->userService->deleteUser($user);
+            return response()->json(['message' => 'User deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 403);
         }
-
-        $user->delete();
-
-        return response()->json(['message' => 'User deleted successfully']);
     }
 }

@@ -13,9 +13,5 @@ npm-debug.log*
 # Editor directories and files
 .idea
 .nuxt
+.output
 .vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
