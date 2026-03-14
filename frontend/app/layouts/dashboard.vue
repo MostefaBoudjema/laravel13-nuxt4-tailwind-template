@@ -6,11 +6,11 @@ const isSidebarOpen = ref(false)
 
 const navLinks = [
   { to: '/dashboard', icon: 'dashboard', label: 'dashboard' },
-  { to: '/users', icon: 'users', label: 'users', role: 'admin' },
-  { to: '/roles', icon: 'shield-alt', label: 'roles', role: 'admin' },
-  { to: '/permissions', icon: 'key', label: 'permissions', role: 'admin' },
-  { to: '/reports', icon: 'chart-bar', label: 'reports', roles: ['admin', 'manager'] },
-  { to: '/settings', icon: 'cog', label: 'settings' }
+  { to: '/dashboard/users', icon: 'users', label: 'users', role: 'admin' },
+  { to: '/dashboard/roles', icon: 'shield-alt', label: 'roles', role: 'admin' },
+  { to: '/dashboard/permissions', icon: 'key', label: 'permissions', role: 'admin' },
+  { to: '/dashboard/reports', icon: 'chart-bar', label: 'reports', roles: ['admin', 'manager'] },
+  { to: '/dashboard/settings', icon: 'cog', label: 'settings' }
 ]
 
 const filteredLinks = computed(() => {

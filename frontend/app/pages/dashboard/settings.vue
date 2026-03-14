@@ -63,7 +63,7 @@ const handleSave = () => {
           <button 
             type="submit" 
             :disabled="saving"
-            class="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 disabled:opacity-70 flex items-center gap-3 active:scale-95"
+            class="bg-indigo-600 text-white px-10 py-4 rounded-2xl font-bold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100 dark:shadow-indigo-900 disabled:opacity-70 flex items-center gap-3 active:scale-95"
           >
             <fa v-if="saving" icon="cog" class="animate-spin" />
             <fa v-else-if="saved" icon="check-circle" />
@@ -96,3 +96,9 @@ const handleSave = () => {
     </div>
   </div>
 </template>
+<style>
+
+.router-link-active:not(#logout) {
+  @apply bg-indigo-600 text-white shadow-lg shadow-indigo-500/20 dark:shadow-none;
+}
+</style>
