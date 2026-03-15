@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  compatibilityDate: '2026-03-14',
 
   modules: [
     '@pinia/nuxt',
@@ -35,7 +36,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://laravel_saas.test/api/v1'
+      // apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://laravel_saas.test/api/v1',
+      apiBase: process.env.NUXT_PUBLIC_LOCAL_API_BASE || '/api'
     }
   },
 
