@@ -9,7 +9,7 @@ definePageMeta({
 
 const { t } = useI18n()
 const auth = useAuthStore()
-const config = useRuntimeConfig()
+const api = useApi()
 
 // Redirect to unauthorized if not admin or manager (manual check in page as example)
 onMounted(() => {
@@ -24,7 +24,7 @@ const deferredSearch = ref('')
 let debounceTimeout: any = null
 
 const { data: reportsData, pending, refresh } = await useFetch<any>('/reports', {
-  baseURL: config.public.apiBase,
+  baseURL: useRuntimeConfig().public.apiBase as string,
   query: { search: deferredSearch },
   headers: {
     Authorization: `Bearer ${auth.token}`

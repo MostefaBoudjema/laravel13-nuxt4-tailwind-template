@@ -10,7 +10,7 @@ definePageMeta({
 
 const { t } = useI18n()
 const auth = useAuthStore()
-const config = useRuntimeConfig()
+const api = useApi()
 
 // Search and Debounce Logic
 const searchQuery = ref('')
@@ -18,7 +18,7 @@ const deferredSearch = ref('')
 let debounceTimeout: any = null
 
 const { data: usersData, pending, refresh, error } = await useFetch<any>('/users', {
-  baseURL: config.public.apiBase,
+  baseURL: useRuntimeConfig().public.apiBase as string,
   query: { search: deferredSearch },
   headers: {
     Authorization: `Bearer ${auth.token}`
@@ -45,7 +45,7 @@ onUnmounted(() => {
 
 // Fetch Roles (for assignment)
 const { data: rolesData } = await useFetch<any>('/roles', {
-  baseURL: config.public.apiBase,
+  baseURL: useRuntimeConfig().public.apiBase as string,
   headers: {
     Authorization: `Bearer ${auth.token}`
   }
@@ -101,8 +101,7 @@ const handleSubmit = async () => {
       delete (payload as any).password
     }
 
-    await $fetch<any>(url, {
-      baseURL: config.public.apiBase,
+    await api<any>(url, {
       method,
       headers: {
         Authorization: `Bearer ${auth.token}`
@@ -123,8 +122,7 @@ const deleteUser = async (userId: number) => {
   if (!confirm(t('delete_confirm'))) return
 
   try {
-    await $fetch(`/users/${userId}`, {
-      baseURL: config.public.apiBase,
+    await api(`/users/${userId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${auth.token}`

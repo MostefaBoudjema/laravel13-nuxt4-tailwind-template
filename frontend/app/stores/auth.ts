@@ -14,6 +14,7 @@ export const useAuthStore = defineStore('auth', () => {
     maxAge: 60 * 60 * 24 * 7, // 1 week
     sameSite: 'lax',
   })
+  const api = useApi()
 
   const isAuthenticated = computed(() => !!token.value && !!user.value)
   const isAdmin = computed(() => user.value?.roles.includes('admin') || false)
@@ -32,8 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
     if (!token.value) return
 
     try {
-      const response = await $fetch<{ success: boolean; data: { user: User } }>('/me', {
-        baseURL: useRuntimeConfig().public.apiBase,
+      const response = await api<{ success: boolean; data: { user: User } }>('/me', {
         headers: {
           Authorization: `Bearer ${token.value}`
         }
@@ -56,9 +56,8 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout() {
     if (token.value) {
       try {
-        await $fetch('/logout', {
+        await api('/logout', {
           method: 'POST',
-          baseURL: useRuntimeConfig().public.apiBase,
           headers: {
             Authorization: `Bearer ${token.value}`
           }

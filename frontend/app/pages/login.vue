@@ -9,6 +9,7 @@ definePageMeta({
 
 const { t } = useI18n()
 const auth = useAuthStore()
+const api = useApi()
 const form = reactive({
   email: '',
   password: ''
@@ -47,9 +48,8 @@ const handleLogin = async () => {
   errors.value = {}
   
   try {
-    const response = await $fetch<{ success: boolean; data: { token: string; user: any } }>('/login', {
+    const response = await api<{ success: boolean; data: { token: string; user: any } }>('/login', {
       method: 'POST',
-      baseURL: useRuntimeConfig().public.apiBase,
       body: form
     })
     
