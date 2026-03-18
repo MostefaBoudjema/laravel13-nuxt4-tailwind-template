@@ -17,7 +17,7 @@ const searchQuery = ref('')
 const deferredSearch = ref('')
 let debounceTimeout: any = null
 
-const { data: usersData, pending, refresh, error } = await useFetch<any>('/users', {
+const { data: usersData, pending, refresh, error } = useFetch<any>('/users', {
   baseURL: useRuntimeConfig().public.apiBase as string,
   query: { search: deferredSearch },
   headers: {
@@ -44,7 +44,7 @@ onUnmounted(() => {
 })
 
 // Fetch Roles (for assignment)
-const { data: rolesData } = await useFetch<any>('/roles', {
+const { data: rolesData } = useFetch<any>('/roles', {
   baseURL: useRuntimeConfig().public.apiBase as string,
   headers: {
     Authorization: `Bearer ${auth.token}`

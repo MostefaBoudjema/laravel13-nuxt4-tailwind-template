@@ -23,7 +23,7 @@ const searchQuery = ref('')
 const deferredSearch = ref('')
 let debounceTimeout: any = null
 
-const { data: reportsData, pending, refresh } = await useFetch<any>('/reports', {
+const { data: reportsData, pending, refresh } = useFetch<any>('/reports', {
   baseURL: useRuntimeConfig().public.apiBase as string,
   query: { search: deferredSearch },
   headers: {
