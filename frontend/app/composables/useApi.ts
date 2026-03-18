@@ -10,10 +10,23 @@
  */
 export const useApi = () => {
   const config = useRuntimeConfig()
+  const loading = useLoading()
 
   const api = $fetch.create({
     baseURL: config.public.apiBase as string,
     credentials: 'include',
+    onRequest() {
+      loading.start()
+    },
+    onRequestError() {
+      loading.finish()
+    },
+    onResponse() {
+      loading.finish()
+    },
+    onResponseError() {
+      loading.finish()
+    },
   })
 
   return api

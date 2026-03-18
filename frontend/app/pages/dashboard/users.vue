@@ -193,6 +193,33 @@ const deleteUser = async (userId: number) => {
         </template>
 
         <template #body="{ cellClass }">
+          <template v-if="pending">
+            <tr v-for="i in 6" :key="`skeleton-${i}`" class="animate-pulse">
+              <td :class="cellClass" class="!px-8 !py-6">
+                <div class="flex items-center gap-3">
+                  <UiSkeleton variant="circle" class="!w-10 !h-10" />
+                  <div class="flex-1">
+                    <UiSkeleton variant="text" :lines="2" />
+                  </div>
+                </div>
+              </td>
+              <td :class="cellClass" class="!px-8 !py-6">
+                <div class="flex flex-wrap gap-2">
+                  <UiSkeleton class="!w-16 !h-6 !rounded-full" />
+                  <UiSkeleton class="!w-20 !h-6 !rounded-full" />
+                </div>
+              </td>
+              <td :class="cellClass" class="!px-8 !py-6">
+                <UiSkeleton variant="text" :lines="1" class="!w-24" />
+              </td>
+              <td :class="cellClass" class="!px-8 !py-6">
+                <div class="flex items-center gap-4">
+                  <UiSkeleton class="!w-10 !h-10 !rounded-xl" />
+                  <UiSkeleton class="!w-10 !h-10 !rounded-xl" />
+                </div>
+              </td>
+            </tr>
+          </template>
           <tr v-for="user in users" :key="user.id" class="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors">
             <td :class="cellClass" class="!px-8 !py-6">
               <div class="flex items-center gap-3">
@@ -233,11 +260,6 @@ const deleteUser = async (userId: number) => {
           </tr>
         </template>
       </UiTable>
-      
-      <div v-if="pending" class="p-12 flex justify-center items-center gap-4">
-        <fa icon="cog" class="text-indigo-600 dark:text-indigo-400 text-2xl animate-spin" />
-        <span class="font-medium text-slate-500 dark:text-slate-400">{{ t('loading_users') }}</span>
-      </div>
     </div>
 
     <!-- Drawer -->
