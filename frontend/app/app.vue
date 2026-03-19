@@ -13,6 +13,7 @@ if (auth.token && !auth.user) {
 <template>
   <div>
     <UiGlobalLoading />
+    <UiToaster />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

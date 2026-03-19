@@ -51,7 +51,8 @@ export default defineNuxtConfig({
       '@fortawesome/vue-fontawesome',
       '@fortawesome/fontawesome-svg-core',
       '@fortawesome/free-solid-svg-icons',
-      'gsap'
+      'gsap',
+      'vue-sonner'
     ]
   },
 

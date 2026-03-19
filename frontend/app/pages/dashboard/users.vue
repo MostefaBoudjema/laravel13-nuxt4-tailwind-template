@@ -11,6 +11,7 @@ definePageMeta({
 const { t } = useI18n()
 const auth = useAuthStore()
 const api = useApi()
+const toast = useToast()
 
 // Search and Debounce Logic
 const searchQuery = ref('')
@@ -111,8 +112,15 @@ const handleSubmit = async () => {
 
     await refresh()
     closeDrawer()
+
+    if (isEditing.value) {
+      toast.success(t('user_updated_success') || 'User updated successfully')
+    } else {
+      toast.success(t('user_created_success') || 'User created successfully')
+    }
   } catch (err: any) {
     console.error('Error saving user:', err)
+    toast.error(t('user_save_failed') || 'Failed to save user')
   } finally {
     submitting.value = false
   }
@@ -129,8 +137,10 @@ const deleteUser = async (userId: number) => {
       }
     })
     await refresh()
+    toast.success(t('user_deleted_success') || 'User deleted successfully')
   } catch (err: any) {
     console.error('Error deleting user:', err)
+    toast.error(t('user_delete_failed') || 'Failed to delete user')
   }
 }
 </script>

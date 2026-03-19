@@ -16,6 +16,7 @@
     "@nuxtjs/color-mode": "^4.0.0",
     "@nuxtjs/i18n": "^10.2.3",
     "@pinia/nuxt": "latest",
+    "vue-sonner": "^1.2.5",
     "gsap": "^3.12.5",
     "nuxt": "^4.0.0-rc.2",
     "pinia": "latest",
