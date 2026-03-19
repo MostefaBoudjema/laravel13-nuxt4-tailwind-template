@@ -60,6 +60,7 @@ const isDrawerOpen = ref(false)
 const isEditing = ref(false)
 const submitting = ref(false)
 const currentUserId = ref<number | null>(null)
+const errors = ref<Record<string, string[]>>({})
 const form = ref({
   name: '',
   email: '',
@@ -70,6 +71,7 @@ const form = ref({
 const openAddDrawer = () => {
   isEditing.value = false
   currentUserId.value = null
+  errors.value = {}
   form.value = { name: '', email: '', password: '', roles: [] }
   isDrawerOpen.value = true
 }
@@ -77,6 +79,7 @@ const openAddDrawer = () => {
 const openEditDrawer = (user: any) => {
   isEditing.value = true
   currentUserId.value = user.id
+  errors.value = {}
   form.value = {
     name: user.name,
     email: user.email,
@@ -92,6 +95,7 @@ const closeDrawer = () => {
 
 const handleSubmit = async () => {
   submitting.value = true
+  errors.value = {}
   try {
     const url = isEditing.value ? `/users/${currentUserId.value}` : '/users'
     const method = isEditing.value ? 'PUT' : 'POST'
@@ -120,7 +124,12 @@ const handleSubmit = async () => {
     }
   } catch (err: any) {
     console.error('Error saving user:', err)
-    toast.error(t('user_save_failed') || 'Failed to save user')
+    if (err.response?._data?.errors) {
+      errors.value = err.response._data.errors
+      toast.error(err.response._data.message || t('user_save_failed') || 'Validation failed.')
+    } else {
+      toast.error(t('user_save_failed') || 'Failed to save user')
+    }
   } finally {
     submitting.value = false
   }
@@ -299,6 +308,7 @@ const deleteUser = async (userId: number) => {
                 :label="t('full_name')"
                 placeholder="John Doe"
                 size="lg"
+                :error="errors.name?.[0] || ''"
                 required
               >
                 <template #left>
@@ -313,6 +323,7 @@ const deleteUser = async (userId: number) => {
                 :label="t('email_address')"
                 placeholder="john@example.com"
                 size="lg"
+                :error="errors.email?.[0] || ''"
                 required
               >
                 <template #left>
@@ -327,6 +338,7 @@ const deleteUser = async (userId: number) => {
                 :label="t('password')"
                 :placeholder="isEditing ? t('keep_empty_password') : '********'"
                 :required="!isEditing"
+                :error="errors.password?.[0] || ''"
                 size="lg"
               >
                 <template #left>
