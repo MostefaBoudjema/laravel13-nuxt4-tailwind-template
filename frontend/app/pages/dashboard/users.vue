@@ -68,6 +68,11 @@ const form = ref({
   roles: [] as string[]
 })
 
+// Delete confirm modal state
+const isDeleteModalOpen = ref(false)
+const deleting = ref(false)
+const deleteTargetUserId = ref<number | null>(null)
+
 const openAddDrawer = () => {
   isEditing.value = false
   currentUserId.value = null
@@ -91,6 +96,17 @@ const openEditDrawer = (user: any) => {
 
 const closeDrawer = () => {
   isDrawerOpen.value = false
+}
+
+const requestDeleteUser = (userId: number) => {
+  deleteTargetUserId.value = userId
+  isDeleteModalOpen.value = true
+}
+
+const closeDeleteModal = () => {
+  if (deleting.value) return
+  isDeleteModalOpen.value = false
+  deleteTargetUserId.value = null
 }
 
 const handleSubmit = async () => {
@@ -135,9 +151,11 @@ const handleSubmit = async () => {
   }
 }
 
-const deleteUser = async (userId: number) => {
-  if (!confirm(t('delete_confirm'))) return
+const confirmDeleteUser = async () => {
+  const userId = deleteTargetUserId.value
+  if (!userId) return
 
+  deleting.value = true
   try {
     await api(`/users/${userId}`, {
       method: 'DELETE',
@@ -147,9 +165,13 @@ const deleteUser = async (userId: number) => {
     })
     await refresh()
     toast.success(t('user_deleted_success') || 'User deleted successfully')
+    isDeleteModalOpen.value = false
+    deleteTargetUserId.value = null
   } catch (err: any) {
     console.error('Error deleting user:', err)
     toast.error(t('user_delete_failed') || 'Failed to delete user')
+  } finally {
+    deleting.value = false
   }
 }
 </script>
@@ -266,7 +288,13 @@ const deleteUser = async (userId: number) => {
                 <UiButton variant="ghost" size="sm" @click="openEditDrawer(user)">
                   <fa icon="edit" />
                 </UiButton>
-                <UiButton v-if="auth.user?.id !== user.id" variant="ghost" size="sm" @click="deleteUser(user.id)" class="!text-slate-400 hover:!text-rose-600">
+                <UiButton
+                  v-if="auth.user?.id !== user.id"
+                  variant="ghost"
+                  size="sm"
+                  @click="requestDeleteUser(user.id)"
+                  class="!text-slate-400 hover:!text-rose-600"
+                >
                   <fa icon="trash" />
                 </UiButton>
               </div>
@@ -280,6 +308,33 @@ const deleteUser = async (userId: number) => {
         </template>
       </UiTable>
     </div>
+
+    <UiModal
+      v-model="isDeleteModalOpen"
+      :title="t('delete')"
+      size="sm"
+      :close-on-backdrop="!deleting"
+      :close-on-esc="!deleting"
+      :show-close="!deleting"
+      @close="closeDeleteModal"
+    >
+      <div class="space-y-3">
+        <p class="text-sm text-slate-600 dark:text-slate-300">
+          {{ t('delete_confirm') }}
+        </p>
+      </div>
+
+      <template #footer>
+        <div class="flex justify-end gap-3">
+          <UiButton variant="secondary" :disabled="deleting" @click="closeDeleteModal">
+            {{ t('cancel') }}
+          </UiButton>
+          <UiButton variant="danger" :loading="deleting" :disabled="deleting" @click="confirmDeleteUser">
+            {{ t('delete') }}
+          </UiButton>
+        </div>
+      </template>
+    </UiModal>
 
     <!-- Drawer -->
     <Transition
