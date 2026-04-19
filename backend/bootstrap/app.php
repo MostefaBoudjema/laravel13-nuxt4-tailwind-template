@@ -14,6 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: 'api/v1',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->redirectTo(
+            guests: fn (Request $request) => $request->is('api/*') ? null : route('login')
+        );
+
         // CSRF protection is usually for web. For token-based API, we don't need stateful sessions.
         // If we want stateful sessions for SPA, we'd use statefulApi(), but that requires CSRF cookies.
         // For this project, we prioritize Bearer tokens as requested.
