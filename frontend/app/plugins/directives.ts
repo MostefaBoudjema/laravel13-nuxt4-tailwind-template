@@ -30,4 +30,19 @@ export default defineNuxtPlugin((nuxtApp) => {
       }
     }
   })
+
+  // v-click-outside: Handle clicks outside of an element
+  nuxtApp.vueApp.directive('click-outside', {
+    mounted(el: any, binding: any) {
+      el.clickOutsideEvent = (event: MouseEvent) => {
+        if (!(el === event.target || el.contains(event.target as Node))) {
+          binding.value(event)
+        }
+      }
+      document.addEventListener('click', el.clickOutsideEvent)
+    },
+    unmounted(el: any) {
+      document.removeEventListener('click', el.clickOutsideEvent)
+    }
+  })
 })

@@ -1,4 +1,5 @@
 import { Toaster, toast } from 'vue-sonner'
+import 'vue-sonner/dist/index.css'
 
 export default defineNuxtPlugin((nuxtApp) => {
   // Global toaster component

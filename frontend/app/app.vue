@@ -13,7 +13,9 @@ if (auth.token && !auth.user) {
 <template>
   <div>
     <UiGlobalLoading />
-    <UiToaster />
+    <ClientOnly>
+      <UiToaster />
+    </ClientOnly>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
